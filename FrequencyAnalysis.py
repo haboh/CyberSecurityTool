@@ -1,8 +1,23 @@
+# coding: utf-8
 from PyQt5.QtWidgets import QPushButton, QPlainTextEdit, QLabel, QApplication, QWidget, \
-    QMainWindow, QDialog, QHBoxLayout, QLineEdit, QCheckBox
+    QMainWindow, QDialog, QHBoxLayout, QLineEdit, QCheckBox, QMessageBox
 from PyQt5 import QtGui, QtWidgets
 from FrequencyAnalysisUi import Ui_MainWindow
 import sys
+
+# This program is considered to help you make frequency analyze on big texts
+# How to use this program:
+# 1) Input text, which you would like to analyze into the plain text editor with label
+# 'Source'.
+# 2) If you would like to change any letter to another one, print in the edit line with
+#  the following label, letter in which you would to change current letter and mark it
+# by checkbox.
+# 3) If checkbox doesn't selected, though this letter won't be changed.
+# 4) Press button with label 'Analyze' to find out how much in percents every letter
+# includes in the source text.
+# 5) Press button with label 'Commit changes' to commit all changes, which you input in
+#  'Change letters'. The result will be in the plain text editor with label 'Modified'
+# 6) You can input not only letters, but also words and phrases.
 
 LETTERS_IN_ALPHABET = 26
 ROWS_IN_GRID = 7
@@ -20,29 +35,36 @@ class FrequencyAnalysis(Ui_MainWindow, QMainWindow):
         self.setWindowTitle('Text frequency analysis')
         self.changeWidgets = {}
 
+        # Fill grid with widgets
         for i in range(LETTERS_IN_ALPHABET):
             letter = chr(ord('a') + i)
             new_layout = QHBoxLayout()
 
+            # Create label with the only one letter
             label = QLabel(letter)
             label.setMinimumSize(20, 15)
             label.setFont(QtGui.QFont("Times", 15, QtGui.QFont.Normal))
             new_layout.addWidget(label)
 
+            # Create input place
             line_edit = QLineEdit()
             new_layout.addWidget(line_edit)
 
-            checkbox = QCheckBox('Lock')
+            # Create checkbox with need of change
+            checkbox = QCheckBox('Change')
             new_layout.addWidget(checkbox)
 
+            # Make little margin on the right
             vertical_spacer = QtWidgets.QSpacerItem(20, 0, QtWidgets.QSizePolicy.Minimum,
                                                     QtWidgets.QSizePolicy.Expanding)
             new_layout.addItem(vertical_spacer)
 
+            # Add layout to grid
             self.changeWidgets[letter] = (line_edit, checkbox)
             x, y = i % ROWS_IN_GRID, i / ROWS_IN_GRID
             self.gridWithLetters.addLayout(new_layout, x, y)
 
+        # Create two buttons in the right corner
         self.analyzeButton = QPushButton('Analyze')
         self.commitChangesButton = QPushButton('Commit changes')
         self.gridWithLetters.addWidget(self.analyzeButton, ROWS_IN_GRID - 2,
@@ -50,10 +72,12 @@ class FrequencyAnalysis(Ui_MainWindow, QMainWindow):
         self.gridWithLetters.addWidget(self.commitChangesButton, ROWS_IN_GRID - 1,
                                        COLUMNS_IN_GRID - 1)
 
+        # Connect buttons with necessary methods
         self.analyzeButton.clicked.connect(self.process_analyze)
         self.commitChangesButton.clicked.connect(self.process_commit)
 
     def process_analyze(self):
+        # Collect information
         text_for_analyze = self.sourceText.toPlainText()
         letters = {}
         letters_amount = 0
@@ -61,17 +85,34 @@ class FrequencyAnalysis(Ui_MainWindow, QMainWindow):
             if c.isalpha():
                 safety_increase_in_dictionary(letters, c)
                 letters_amount += 1
+
+        # Display information
         self.lettersAmount.clear()
         for letter, amount in sorted(letters.items()):
             percent = round(float(amount / letters_amount * 100), 2)
             self.lettersAmount.addItem(letter + ' - ' + str(percent) + '%')
 
     def process_commit(self):
-        pass
+        changes = {}
+        for letter, widgets in self.changeWidgets.items():
+            if widgets[1].isChecked():
+                changing_letter = widgets[0].text()
+                changes[letter] = changing_letter
+        self.update_modified_text(changes)
+
+    def update_modified_text(self, changes):
+        new_text = ''
+        for c in self.sourceText.toPlainText():
+            new_text += changes[c] if c.isalpha() and c in changes else c
+        self.ModifiedText.setPlainText(new_text)
 
 
-if __name__ == '__main__':
+def main():
     application = QApplication(sys.argv)
     widget = FrequencyAnalysis()
     widget.show()
     sys.exit(application.exec_())
+
+
+if __name__ == '__main__':
+    main()
