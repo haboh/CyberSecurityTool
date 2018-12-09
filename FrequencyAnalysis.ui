@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>971</width>
-    <height>702</height>
+    <width>972</width>
+    <height>687</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>10</y>
       <width>951</width>
-      <height>651</height>
+      <height>641</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="Window">
@@ -104,22 +104,7 @@
           <widget class="QListWidget" name="lettersAmount"/>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
-            <widget class="QPushButton" name="AnalyzeButton">
-             <property name="text">
-              <string>Analyze</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="commitChangesButton">
-             <property name="text">
-              <string>Commit Changes</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <layout class="QHBoxLayout" name="horizontalLayout_4"/>
          </item>
         </layout>
        </item>
