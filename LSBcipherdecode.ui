@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>384</width>
-    <height>505</height>
+    <height>314</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LSBcipher decode mode</string>
+   <string>LSBcipher encode mode</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="previewButton">
@@ -60,13 +60,13 @@
      </rect>
     </property>
     <property name="text">
-     <string> </string>
+     <string>Preview</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>30</x>
       <y>100</y>
       <width>101</width>
       <height>17</height>
@@ -76,7 +76,7 @@
      <string>Image preview:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="decodeButton">
+   <widget class="QPushButton" name="encodeButton">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -86,191 +86,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Decode LSB message</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>220</y>
-      <width>54</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Red</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_r">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>240</y>
-      <width>113</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_rr">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>300</y>
-      <width>113</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_gr">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>300</y>
-      <width>113</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_g">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>240</y>
-      <width>113</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_b">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>380</y>
-      <width>113</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_br">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>440</y>
-      <width>113</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_rgb">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>380</y>
-      <width>113</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_rgbr">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>440</y>
-      <width>113</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>280</y>
-      <width>91</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Red reversed</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>280</y>
-      <width>101</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Green reversed</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>220</y>
-      <width>54</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Green</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>360</y>
-      <width>54</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Blue</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>360</y>
-      <width>54</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>RGB</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>420</y>
-      <width>81</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Blue reversed</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>420</y>
-      <width>81</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>RGB reversed</string>
+     <string>Encode LSB message</string>
     </property>
    </widget>
    <widget class="QPushButton" name="fileExplorerButton">
@@ -302,6 +118,29 @@
     </property>
     <property name="text">
      <string>*working only with png/bmp/jpg etc</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="msgEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>250</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>220</y>
+      <width>331</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Print your binary message you want to encode here:</string>
     </property>
    </widget>
   </widget>
