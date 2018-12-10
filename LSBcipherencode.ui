@@ -60,7 +60,7 @@
      </rect>
     </property>
     <property name="text">
-     <string> </string>
+     <string>Preview</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
