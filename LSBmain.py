@@ -30,10 +30,15 @@ class LSBDecode(QWidget):
         uic.loadUi('LSBcipherdecode.ui', self)
         self.decodeType=""
         self.image=None
+        self.height=None
+        self.width=None
+        self.pix=None
         self.redmsg=""
         self.greenmsg=""
         self.blumsg=""
         self.rgbmsg=""
+        self.previewImg=None
+        self.MAXSIZE = (PREVIEWW, PREVIEWH)
         self.decodeButton.clicked.connect(self.decodeBtn)
         self.fileExplorerButton.clicked.connect(self.openFileNameDialog)
         self.previewButton.clicked.connect(self.makePreview)
@@ -55,7 +60,10 @@ class LSBDecode(QWidget):
         	self.rowDecode()
 
     def openImg(self):
-    	pass
+    	self.image = Image.open(pathEdit.getText())  
+		self.width = image.size[0] 
+		self.height = image.size[1] 	
+		self.pix = image.load()
 
     def openFileNameDialog(self):    
         options = QFileDialog.Options()
@@ -66,7 +74,11 @@ class LSBDecode(QWidget):
 
     def makePreview(self):
     	self.openImg()
-
+		self.previewImg = self.image.thumbnail(self.maxsize, Image.ANTIALIAS)
+		self.previewImg.save("previewLSBhabohXfatnet.png")
+		pixmap = QPixmap("previewLSBhabohXfatnet.png")
+		self.previewLabel.setPixmap(pixmap)
+		
     def columnDecode(self):
     	pass
 
@@ -83,6 +95,8 @@ class LSBEncode(QWidget):
         self.msg=""
         self.channel=""
         self.encodeType=""
+        self.previewImg=None
+        self.MAXSIZE = (PREVIEWW, PREVIEWH)
         self.encodeButton.clicked.connect(self.encodeBtnChnl)
         self.fileExplorerButton.clicked.connect(self.runExplorer)
         self.previewButton.clicked.connect(self.makePreview)
@@ -118,7 +132,10 @@ class LSBEncode(QWidget):
         	self.rowEncode()
 
     def openImg(self):
-    	pass
+    	self.image = Image.open(pathEdit.getText())  
+		self.width = self.image.size[0] 
+		self.height = self.image.size[1] 	
+		self.pix = self.image.load()
 
     def openFileNameDialog(self):    
         options = QFileDialog.Options()
@@ -131,10 +148,14 @@ class LSBEncode(QWidget):
     def saveFileDialog(self):    
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()","","BMP files (*.bmp);;PNG files (*.png);;JPG Files (*.jpg)", options=options)
+        fileNa me, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()","","BMP files (*.bmp);;PNG files (*.png);;JPG Files (*.jpg)", options=options)
 
     def makePreview(self):
-    	pass
+    	self.openImg()
+		self.previewImg = self.image.thumbnail(self.maxsize, Image.ANTIALIAS)
+		self.previewImg.save("previewLSBhabohXfatnet.png")
+		pixmap = QPixmap("previewLSBhabohXfatnet.png")
+		self.previewLabel.setPixmap(pixmap)
 
     def columnEncode(self):
     	pass
