@@ -179,3 +179,21 @@ def bind(string):
 		else:
 			enc += ('-UnknownSymbol-:'+j)
 	return enc
+
+def md5(string):
+	return hashlib.md5().update(string).digest()
+
+def sha1(string):
+	return hashlib.sha1().update(string).digest()
+
+def sha224(string):
+	return hashlib.sha224().update(string).digest()
+
+def sha256(string):
+	return hashlib.sha256().update(string).digest()
+
+def sha384(string):
+	return hashlib.sha384().update(string).digest()
+
+def sha512(string):
+	return hashlib.sha512().update(string).digest()
