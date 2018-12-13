@@ -6,21 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>280</width>
-    <height>291</height>
+    <width>264</width>
+    <height>457</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CryptoTool</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="TextLabel">
+   <widget class="QLineEdit" name="Input">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
+      <x>10</x>
+      <y>20</y>
       <width>241</width>
-      <height>211</height>
+      <height>161</height>
      </rect>
     </property>
    </widget>
@@ -28,13 +28,49 @@
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>230</y>
+      <y>400</y>
       <width>141</width>
       <height>33</height>
      </rect>
     </property>
     <property name="text">
      <string>CryptoTool this text</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Output">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>241</width>
+      <height>161</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>0</y>
+      <width>181</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Input:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>190</y>
+      <width>181</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Output:</string>
     </property>
    </widget>
   </widget>
