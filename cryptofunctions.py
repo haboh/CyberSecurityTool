@@ -1,12 +1,21 @@
-import base64
-import hashlib
-import math
-import string
-import binascii
+#                        _           __                  _   _                 
+#                       | |         / _|                | | (_)                
+#   ___ _ __ _   _ _ __ | |_ ___   | |_ _   _ _ __   ___| |_ _  ___  _ __  ___ 
+#  / __| '__| | | | '_ \| __/ _ \  |  _| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+# | (__| |  | |_| | |_) | || (_) | | | | |_| | | | | (__| |_| | (_) | | | \__ \
+#  \___|_|   \__, | .__/ \__\___/  |_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+#             __/ | |                                                          
+#            |___/|_|                                                                   by fatnet
 
-def scytalee(plain_text, key):
-    chars = [c.upper() for c in plain_text if c not in (' ',',','.','?','!',':',';',"'")]
-    chunks = math.ceil(len(chars) / float(key))
+import base64 # importing lib to encode/decode base16/32/64 
+import hashlib # importing lib to encode hash-functions
+import math # importing lib to get math.ceil function
+import string as strin # importing lib to get ascii letters string
+import binascii # importing lib to encode/decode bin/hex
+
+def scytale_encrypt(plain_text, key): # scytale cipher encrypt function
+    chars = [c.upper() for c in plain_text if c not in (' ',',','.','?','!',':',';',"'")] # getting only english letters from plain_text
+    chunks = math.ceil(len(chars) / float(key)) # getting table size
     inters, j = [], 1
 
     for i in range(2, chunks+1)
@@ -14,8 +23,8 @@ def scytalee(plain_text, key):
         j += key
 
     cipher = []
-    for k in range(key):
-        for l in range(chunks)
+    for k in range(key): # for k in range rows
+        for l in range(chunks) # for j in range columns
             if k >= len(inters[l]):
                 cipher.append('+')
             else:
@@ -24,9 +33,9 @@ def scytalee(plain_text, key):
     return ''.join(cipher)
 
 
-def scytaled(cipher_text, key):
+def scytale_decrypt(cipher_text, key): # scytale cipher decrypt function
     chars = [c for c in cipher_text]
-    chunks = int(math.ceil(len(chars) / float(key)))
+    chunks = int(math.ceil(len(chars) / float(key)))  # getting table size
     inters, j = [], 1
 
     for i in range(2, key+1)
@@ -34,54 +43,54 @@ def scytaled(cipher_text, key):
         j += chunks
 
     plain = []
-    for k in range(chunks):
-        for l in range(len(inters))
+    for k in range(chunks): # for k in range columns
+        for l in range(len(inters)) # for j in range rows
             plain.append(inters[l][k])
 
 	return ''.join(plain)
 
-def base16e(string):
+def base16_encrypt(string): # base16 cipher encrypt function
 	return base64.b16encode(string)
 
-def base16d(string):
+def base16_decrypt(string): # base16 cipher decrypt function
 	return base64.b16decode(string.lower(), casefold=False)
 
-def base32e(string):
+def base32_encrypt(string): # base32 cipher encrypt function
 	return base64.b32encode(string)
 
-def base32d(string):
+def base32_decrypt(string): # base32 cipher decrypt function
 	return base64.b32decode(string.lower(), casefold=False, map01=None)
 
-def base64e(string):
+def base64_encrypt(string): # base64 cipher encrypt function
 	return base64.b64encode(string, altchars=None)
 
-def base64d(string):
+def base64_decrypt(string): # base64 cipher decrypt function
 	return base64.b64decode(string, altchars=None, validate=False)
 
-def reversed(string):
+def reverse_decrypt(string): # reverse cipher decrypt function
 	s=string.reverse()
 	return s
 
-def reversee(string):
+def reverse_encrypt(string): # reverse cipher encrypt function
 	s=string.reverse()
 	return s
 
-def caesare(string, key):
-	chars = string.ascii_lowercase
-    key_chars = chars[key%26:] + chars[:key%26]
-    table = string.maketrans(chars, key_chars)
-    return string.translate(table)
+def caesar_encrypt(string, key): # caesar cipher encrypt function
+    chars = strin.ascii_lowercase # not stepped alphabet
+    key_chars = chars[key%26:] + chars[:key%26] # getting alphabet stepped with key
+    table = string.maketrans(chars, key_chars) # making a table using the maketrans method
+    return string.translate(table) # returning str(table)
 
-def caesard(string, key):
-	return caesare(string, 26-(key%26))
+def caesar_decrypt(string, key): # caesar cipher decrypt function
+	return caesar_encrypt(string, 26-(key%26)) # caesar cipher decode function with key is similar to caesar cipher encode function with key=26-(key%26)
 
-def rot13e(string):
-	return caesare(string, 13)
+def rot13_encrypt(string): # rot13 cipher encrypt function
+	return caesar_encrypt(string, 13) # rot13 cipher is similiar to caesar with key 13
 
-def rot13d(string):
-	return caesard(string, 13)
+def rot13_decrypt(string):  # rot13 cipher decrypt function
+	return caesar_decrypt(string, 13) # rot13 cipher is similiar to caesar with key 13
 
-def offset(even, rails, rail):
+def offset(even, rails, rail): # function that makes railfence calculating easier
     if rail == 0 or rail == rails - 1:
         return (rails - 1) * 2
 
@@ -92,7 +101,7 @@ def offset(even, rails, rail):
 
 
 
-def railfenced(encrypted, rails, showOff = 0):
+def railfence_decrypt(encrypted, rails, showOff = 0):  # railfence cipher decrypt function
     array = [[" " for col in range(len(encrypted))] for row in range(rails)]
     read = 0
     
@@ -129,23 +138,23 @@ def railfenced(encrypted, rails, showOff = 0):
 
     return decoded
 
-def vigeneree(string, key):
+def vigenere_encrypt(string, key): # vigenere cipher encrypt function
 	k = key*(len(string) // len(key) + 1)
 	cipher= ''.join([chr((ord(j) + ord(k[i])) % 26 + ord('A')) for i, j in enumerate(string)])
 	return cipher
 
-def vigenered(string, key):
+def vigenere_decrypt(string, key): # vigenere cipher decrypt function
 	k = key*(len(string) // len(key) + 1)
 	dec=''.join([chr((ord(j) - ord(k[i])) % 26 + ord('A')) for i, j in enumerate(string)])
 	return dec
 
-def hexd(string):
+def hex_decrypt(string): # hex cipher decrypt function
 	return str(bytes.fromhex(string))[2:-1]
 
-def hexe(string):
+def hex_encrypt(string): # hex cipher encrypt function
 	return int(string, 16)
 
-def bine(string):
+def bin_encrypt(string): # binary cipher encrypt function
 	st=string.lower()
 	keys='a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 { } ; , . [ ] ( )'
 	keys.split()
@@ -163,7 +172,7 @@ def bine(string):
 	return ciph
 
 
-def bind(string):
+def bin_decrypt(string): # binary cipher decrypt function
 	st=string.split()
 	values='a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 { } ; , . [ ] ( )'
 	keys.split()
@@ -180,20 +189,20 @@ def bind(string):
 			enc += ('-UnknownSymbol-:'+j)
 	return enc
 
-def md5(string):
+def md5(string): # md5 string to hash function
 	return hashlib.md5().update(string).digest()
 
-def sha1(string):
+def sha1(string): # sha1 string to hash function
 	return hashlib.sha1().update(string).digest()
 
-def sha224(string):
+def sha224(string): # sha224 string to hash function
 	return hashlib.sha224().update(string).digest()
 
-def sha256(string):
+def sha256(string): # sha256 string to hash function
 	return hashlib.sha256().update(string).digest()
 
-def sha384(string):
+def sha384(string): # sha384 string to hash function
 	return hashlib.sha384().update(string).digest()
 
-def sha512(string):
+def sha512(string): # sha512 string to hash function
 	return hashlib.sha512().update(string).digest()
