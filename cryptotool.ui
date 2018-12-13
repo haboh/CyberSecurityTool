@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>264</width>
-    <height>457</height>
+    <height>463</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,17 +24,17 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="decodeButton">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>140</x>
       <y>400</y>
-      <width>141</width>
+      <width>111</width>
       <height>33</height>
      </rect>
     </property>
     <property name="text">
-     <string>CryptoTool this text</string>
+     <string>Decode Input</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="Output">
@@ -50,7 +50,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>10</x>
       <y>0</y>
       <width>181</width>
       <height>17</height>
@@ -63,7 +63,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>10</x>
       <y>190</y>
       <width>181</width>
       <height>17</height>
@@ -71,6 +71,19 @@
     </property>
     <property name="text">
      <string>Output:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="encodeButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>400</y>
+      <width>101</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Encode Input</string>
     </property>
    </widget>
   </widget>
