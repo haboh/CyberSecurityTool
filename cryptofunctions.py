@@ -14,6 +14,8 @@ import string as strin # importing lib to get ascii letters string
 import binascii # importing lib to encode/decode bin/hex
 
 def scytale_encrypt(plain_text, key): # scytale cipher encrypt function
+	if not n.isdigit():
+		return None
     chars = [c.upper() for c in plain_text if c not in (' ',',','.','?','!',':',';',"'")] # getting only english letters from plain_text
     chunks = math.ceil(len(chars) / float(key)) # getting table size
     inters, j = [], 1
@@ -34,6 +36,8 @@ def scytale_encrypt(plain_text, key): # scytale cipher encrypt function
 
 
 def scytale_decrypt(cipher_text, key): # scytale cipher decrypt function
+	if not key.isdigit():
+		return None
     chars = [c for c in cipher_text]
     chunks = int(math.ceil(len(chars) / float(key)))  # getting table size
     inters, j = [], 1
@@ -76,13 +80,17 @@ def reverse_encrypt(string): # reverse cipher encrypt function
 	return s
 
 def caesar_encrypt(string, key): # caesar cipher encrypt function
+	if not key.isdigit():
+		return None
     chars = strin.ascii_lowercase # not stepped alphabet
-    key_chars = chars[key%26:] + chars[:key%26] # getting alphabet stepped with key
+    key_chars = chars[int(key)%26:] + chars[:int(key)%26] # getting alphabet stepped with key
     table = string.maketrans(chars, key_chars) # making a table using the maketrans method
     return string.translate(table) # returning str(table)
 
 def caesar_decrypt(string, key): # caesar cipher decrypt function
-	return caesar_encrypt(string, 26-(key%26)) # caesar cipher decode function with key is similar to caesar cipher encode function with key=26-(key%26)
+	if not key.isdigit():
+		return None
+	return caesar_encrypt(string, 26-(int(key)%26)) # caesar cipher decode function with key is similar to caesar cipher encode function with key=26-(key%26)
 
 def rot13_encrypt(string): # rot13 cipher encrypt function
 	return caesar_encrypt(string, 13) # rot13 cipher is similiar to caesar with key 13
@@ -99,11 +107,15 @@ def fence(lst, numrails): # fence functions turns string into railfence view and
     return [c for rail in fence for c in rail if c is not None] # making it list
 
 def railfence_encode(text, n): # railfence cipher encrypt function
-    return ''.join(fence(text, n))
+	if not n.isdigit():
+		return None
+    return ''.join(fence(text, int(n)))
 
 def railfence_decode(text, n): # railfence cipher decrypt function
+	if not n.isdigit():
+		return None
     rng = range(len(text))
-    pos = fence(rng, n)
+    pos = fence(rng, int(n))
     return ''.join(text[pos.index(n)] for n in rng) # rail fence decode with key n is the same with fence(rng, n)[pos.index(n)] for n in range(len(text))
 
 def vigenere_encrypt(string, key): # vigenere cipher encrypt function
@@ -164,6 +176,14 @@ def sha384(string): # sha384 string to hash function
 def sha512(string): # sha512 string to hash function
 	return hashlib.sha512().update(string).digest()
 
+
+def what_to_do(func, string, key=None):
+	ERRSTR='-Error-'
+	if key!=None:
+		if func=="Scytale":
+			return sc
+
+
 class CryptoTool(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -172,6 +192,8 @@ class CryptoTool(QMainWindow):
         self.output=''
         self.decodeType=None
         self.encodeType=None
+        self.key=None
+        self.keyrequired=["Scytale","Caesar","RailFence","Vigenere"]
         self.decodeButton.clicked.connect(
             self.runDecode)
         self.encodeButton.clicked.connect(
@@ -184,13 +206,60 @@ class CryptoTool(QMainWindow):
     		self, 
     		"Encode",
     		"Choose encoding type",
-    		("Scytale", "Through Rows"),
+    		("Reverse","Scytale","Binary","hex","Base16", "Base32", "Base64","ROT13","Caesar","RailFence","Vigenere", "md5 hash", "sha1 hash", "sha224 hash", "sha256 hash", "sha384 hash", "sha512 hash"),
     		1,
     		False
 		)
 		if okBtnPressed:
             self.encodeType=i
+            if self.encodeType not in self.keyrequired:
+            	try:
+            		self.Output.setText(what_to_do(self.encodeType, self.Input.getText()))
+            	except Exception:
+            		self.Output.setText("-Error-")
+            else:
+            	keyEncode(self.encodeType)
 
     def runDecode(self):
         self.encodeType="base16"
     	self.decodeType="base16"
+    	i, okBtnPressed = QInputDialog.getItem(
+    		self, 
+    		"Encode",
+    		"Choose encoding type",
+    		("Reverse","Scytale","Binary","hex","Base16", "Base32", "Base64","ROT13","Caesar","RailFence","Vigenere"),
+    		1,
+    		False
+		)
+		if okBtnPressed:
+            self.decodeType=i
+            if self.decodeType not in self.keyrequired:
+            	try:
+            		self.Output.setText(what_to_do(self.decodeType, self.Input.getText()))
+            	except Exception:
+            		self.Output.setText("-Error-")
+            else:
+            	keyDecode(self.decodeType)
+
+
+    def keyEncode(self, ciphertype):
+    	i, okBtnPressed = QInputDialog.getText(
+            self, "Key", "Insert key"
+        )
+        if okBtnPressed:
+            self.key=i
+            try:
+            	self.Output.setText(what_to_do(self.encodeType, self.Input.getText(), self.key))
+            except Exception:
+            	self.Output.setText("-Error-")
+
+    def keyDecode(self, ciphertype):
+    	i, okBtnPressed = QInputDialog.getText(
+            self, "Key", "Insert key"
+        )
+        if okBtnPressed:
+            self.key=i
+            try:
+            	self.Output.setText(what_to_do(self.decodeType, self.Input.getText(), self.key))
+            except Exception:
+            	self.Output.setText("-Error-")
