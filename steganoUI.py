@@ -1,4 +1,3 @@
-@@ -1,77 +0,0 @@
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'stegano.ui'
@@ -8,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Stegano(object):
     def setupUi(self, Stegano):

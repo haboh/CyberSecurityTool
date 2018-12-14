@@ -14,6 +14,7 @@ from PIL import Image
 import sys
 
 
+# This function takes PIL image and convert it into the QPixMap
 def convert_image_to_pix_map(im):
     im = im.convert("RGBA")
     qim = ImageQt(im)
@@ -21,13 +22,16 @@ def convert_image_to_pix_map(im):
     return pix
 
 
+# Main class
 class MainWindow(QMainWindow, Ui_Stegano):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowTitle('Stegano')
         self.PixMap = QLabel(self)
         self.PixMap.move(20, 20)
         self.PixMap.resize(300, 300)
+        # All buttons in the application
         self.buttons = [
             self.DefaultButton,
             self.XORButton,
@@ -39,24 +43,28 @@ class MainWindow(QMainWindow, Ui_Stegano):
             self.FullBlueButton,
         ]
         self.DefaultButton.setChecked(True)
+        # Connect buttons to the actions when they are chosen
         for button in self.buttons:
             button.toggled.connect(self.process_buttons)
+        # Make button with file choice
         self.pushButton.clicked.connect(self.file)
         self.file_name, self.image, self.pixels, self.width, self.height = None, None, None, None, None
         self.file()
 
+    # This function calls QFileDialog and propose to choose file
     def file(self):
         file_name = QFileDialog.getOpenFileName(self, 'Select image',
-                                            '/', "Image files (*.jpg)")[0]
+                                                '/', "Image files (*.jpg)")[0]
         self.file_name = file_name
         self.image = Image.open(self.file_name)
         self.pixels = self.image.load()
         self.width, self.height = self.image.size
-        self.PixMap.resize(self.width + 200, self.height + 200)
+        self.PixMap.resize(self.width , self.height + 60)
         self.process_buttons()
-        self.verticalLayoutWidget.move(self.width + 50, 100)
+        self.verticalLayoutWidget.move(self.width + 50, 30)
 
     def process_buttons(self):
+        # Process all buttons
         for button in self.buttons:
             if button.isChecked():
                 if button.text() == 'Default':
@@ -76,6 +84,7 @@ class MainWindow(QMainWindow, Ui_Stegano):
                 if button.text() == 'Full Blue':
                     self.PixMap.setPixmap(convert_image_to_pix_map(self.get_full_picture(2)))
 
+    # Make picture negative
     def get_xor_picture(self):
         im = self.image.copy()
         pix = im.load()
@@ -86,6 +95,7 @@ class MainWindow(QMainWindow, Ui_Stegano):
                 pix[i, j] = (r, g, b)
         return im
 
+    # This function makes white-black picture by one of the RGB colors, if it is half completed
     def get_plane_picture(self, k):
         im = self.image.copy()
         pix = im.load()
@@ -100,6 +110,7 @@ class MainWindow(QMainWindow, Ui_Stegano):
                 pix[i, j] = (r, g, b)
         return im
 
+    # This function makes one of the RGB colors full(255)
     def get_full_picture(self, k):
         im = self.image.copy()
         pix = im.load()
