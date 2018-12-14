@@ -1,23 +1,14 @@
-# coding: utf-8
-from PyQt5.QtWidgets import QPushButton, QPlainTextEdit, QLabel, QApplication, QWidget, \
-    QMainWindow, QDialog, QHBoxLayout, QLineEdit, QCheckBox, QMessageBox
+# ╔══╦═══╦═══╦═══╦╗╔╦═══╦╗─╔╦══╦╗╔╦════╦═══╦══╗╔══╦════╦══╦╗─╔╦══╦╗─╔╗╔╦══╦══╦══╗
+# ║╔═╣╔═╗║╔══╣╔═╗║║║║╔══╣╚═╝║╔═╣║║╠═╗╔═╣╔══╩═╗║║╔═╩═╗╔═╣╔╗║╚═╝║╔╗║║─║║║║╔═╩╗╔╣╔═╝
+# ║╚═╣╚═╝║╚══╣║─║║║║║╚══╣╔╗─║║─║╚╝║─║║─║╚══╗─║╚╝║───║║─║╚╝║╔╗─║╚╝║║─║╚╝║╚═╗║║║╚═╗
+# ║╔═╣╔╗╔╣╔══╣║╔╝║║║║╔══╣║╚╗║║─╚═╗║─║║─║╔══╝─║╔╗║───║║─║╔╗║║╚╗║╔╗║║─╚═╗╠═╗║║║╚═╗║
+# ║║─║║║║║╚══╣╚╝─║╚╝║╚══╣║─║║╚═╗╔╝║─║║─║╚══╦═╝║║╚═╗─║║─║║║║║─║║║║║╚═╗╔╝╠═╝╠╝╚╦═╝║
+# ╚╝─╚╝╚╝╚═══╩═══╩══╩═══╩╝─╚╩══╝╚═╝─╚╝─╚═══╩══╝╚══╝─╚╝─╚╝╚╩╝─╚╩╝╚╩══╝╚═╩══╩══╩══╝ by haboh
+
+from PyQt5.QtWidgets import QPushButton, QLabel, QApplication, QMainWindow, QHBoxLayout, QLineEdit, QCheckBox
 from PyQt5 import QtGui, QtWidgets
 from FrequencyAnalysisUi import Ui_MainWindow
 import sys
-
-# This program is considered to help you make frequency analyze on big texts
-# How to use this program:
-# 1) Input text, which you would like to analyze into the plain text editor with label
-# 'Source'.
-# 2) If you would like to change any letter to another one, print in the edit line with
-#  the following label, letter in which you would to change current letter and mark it
-# by checkbox.
-# 3) If checkbox doesn't selected, though this letter won't be changed.
-# 4) Press button with label 'Analyze' to find out how much in percents every letter
-# includes in the source text.
-# 5) Press button with label 'Commit changes' to commit all changes, which you input in
-#  'Change letters'. The result will be in the plain text editor with label 'Modified'
-# 6) You can input not only letters, but also words and phrases.
 
 LETTERS_IN_ALPHABET = 26
 ROWS_IN_GRID = 7
