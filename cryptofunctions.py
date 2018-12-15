@@ -232,23 +232,34 @@ def bin_decrypt(string): # binary cipher decrypt function
 		return '-Error-'
 	
 def md5(string): # md5 string to hash function
-	return hashlib.md5().update(string).digest()
+	h=hashlib.md5()
+	h.update(bytes(string, encoding="utf-8"))
+	return h.hexdigest()
 
 def sha1(string): # sha1 string to hash function
-	return hashlib.sha1().update(string).digest()
+	h=hashlib.sha1()
+	h.update(bytes(string, encoding="utf-8"))
+	return h.hexdigest()
 
 def sha224(string): # sha224 string to hash function
-	return hashlib.sha224().update(string).digest()
+	h=hashlib.sha224()
+	h.update(bytes(string, encoding="utf-8"))
+	return h.hexdigest()
 
 def sha256(string): # sha256 string to hash function
-	return hashlib.sha256().update(string).digest()
+	h=hashlib.sha256()
+	h.update(bytes(string, encoding="utf-8"))
+	return h.hexdigest()
 
 def sha384(string): # sha384 string to hash function
-	return hashlib.sha384().update(string).digest()
+	h=hashlib.sha384()
+	h.update(bytes(string, encoding="utf-8"))
+	return h.hexdigest()
 
 def sha512(string): # sha512 string to hash function
-	return hashlib.sha512().update(string).digest()
-
+	h=hashlib.sha512()
+	h.update(bytes(string, encoding="utf-8"))
+	return h.hexdigest()
 
 def what_to_do(whattodo, func, string, key=None):
 	if key!=None:
