@@ -59,7 +59,7 @@ class MainWindow(QMainWindow, Ui_Stegano):
         self.image = Image.open(self.file_name)
         self.pixels = self.image.load()
         self.width, self.height = self.image.size
-        self.PixMap.resize(self.width , self.height + 60)
+        self.PixMap.resize(self.width, self.height + 60)
         self.process_buttons()
         self.verticalLayoutWidget.move(self.width + 50, 30)
 
