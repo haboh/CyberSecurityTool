@@ -16,7 +16,6 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMainWindow
 from PyQt5.QtWidgets import QLabel, QLineEdit, QHBoxLayout, QInputDialog
-from PyQt5.QtGui import QPixmap, QIcon
 
 
 def scytale_encrypt(plain_text, key):  # scytale cipher encrypt function
@@ -132,8 +131,14 @@ def reverse_encrypt(string):  # reverse cipher encrypt function
 
 def caesar_encrypt(string, key):  # caesar cipher encrypt function
     try:
-        if not key.isdigit() and type(key) != int:
+        flag = 0
+        if type(key) == str:
+            flag = 1
+            if not key.isdigit():
+                return '-Error-'
+        if type(key) != int and flag != 1:
             return '-Error-'
+
         chars = strin.ascii_lowercase  # not stepped alphabet
         key_chars = chars[int(key) % 26:] + chars[:int(
             key) % 26]  # getting alphabet stepped with key
@@ -177,7 +182,7 @@ def fence(lst,
         fence = [[None] * len(lst) for n in range(
             numrails)]  # generating fence with the size that is required for the numrails
         rails = range(numrails - 1) + range(numrails - 1, 0,
-                                            -1)  # generaiting rails
+                                            -1)  # generating rails
         for n, x in enumerate(lst):
             fence[rails[n % len(rails)]][n] = x  # generating railfence table
 
@@ -436,7 +441,8 @@ class CryptoTool(QMainWindow):
             if self.encodeType not in self.keyrequired:
                 try:
                     self.Output.setText(
-                        what_to_do("e", self.encodeType, self.Input.getText(), None))
+                        what_to_do("e", self.encodeType, self.Input.getText(),
+                                   None))
                 except Exception:
                     self.Output.setText("-Error-")
             else:
@@ -462,7 +468,8 @@ class CryptoTool(QMainWindow):
             if self.decodeType not in self.keyrequired:
                 try:
                     self.Output.setText(
-                        what_to_do("d", self.decodeType, self.Input.getText(), None))
+                        what_to_do("d", self.decodeType, self.Input.getText(),
+                                   None))
                 except Exception:
                     self.Output.setText("-Error-")
             else:
