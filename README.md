@@ -52,9 +52,9 @@ _________________________________________
   ```
 ### 8. RailFence cipher:
   Sometimes it's called "Zigzag cipher". It's a form of transposition cipher. It derives its name from the way in which it is encoded.<br />
-  W       E       C       R       L       T       E<br />
-    E   R   D   S   O   E   E   F   E   A   O   C  <br />
-      A       I       V       D       E       N    <br />
+  WxxxxxxxExxxxxxxCxxxxxxxRxxxxxxxLxxxxxxxTxxxxxxxE<br />
+  xxExxxRxxxDxxxSxxxOxxxExxxExxxFxxxExxxAxxxOxxxCxx<br />
+  xxxxAxxxxxxxIxxxxxxxVxxxxxxxDxxxxxxxExxxxxxxNxxxx<br />
   ```python
   railfence('WE ARE DISCOVERED. FLEE AT ONCE')='WECRLTEERDSOEEFEAOCAIVDEN'
   ```
