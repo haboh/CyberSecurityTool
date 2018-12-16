@@ -5,13 +5,13 @@
 
 * All infrormation about each program:
 
-  1.[Stegano](Stegano/Stegano.md)
+  1. [Stegano](Stegano/Stegano.md)
   
-  2.[Frequency Text Analysis](FrequencyTextAnalysis/FrequencyTextAnalysis.md)
+  2. [Frequency Text Analysis](FrequencyTextAnalysis/FrequencyTextAnalysis.md)
 
-  3.[Crypto Tool](CryptoTool/CryptoTool.md)
+  3. [Crypto Tool](CryptoTool/CryptoTool.md)
    
-  4.[LSBcipher](LSBcipher/LSBcipher.md)
+  4. [LSBcipher](LSBcipher/LSBcipher.md)
    
 * Send your feedbacks and suggestions to us:
 
