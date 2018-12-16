@@ -1,7 +1,7 @@
 # CyberSecurityTool/CryptoTool
 ## A: Theoretical section.
 ### 0. Hashes:
-  We know how they work but its to hard to explane, but they are very usable
+  We know how they work but its to hard to explane, so know we should just know that they are working in our program and you can encrypt using it
 ### 1. Reverse cipher:
   We just reverse the string to encrypt it:
   ```python
