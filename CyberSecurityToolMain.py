@@ -11,6 +11,7 @@ class CyberSecurityTooMainWindow(QMainWindow, Ui_CyberSecurityTool):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowTitle('Cyber Security Tool')
         self.PixMap.setPixmap(QPixmap('CyberSecurityTool.jpg'))
         self.SteganoButton.clicked.connect(self.create_stegano_window)
         self.CryptoToolButton.clicked.connect(self.create_crypto_tool_window)
