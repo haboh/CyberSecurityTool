@@ -54,7 +54,7 @@ _________________________________________
   Sometimes it's called "Zigzag cipher". It's a form of transposition cipher. It derives its name from the way in which it is encoded.<br />
   ![alt text](https://pp.userapi.com/c844416/v844416560/15d64c/eX2b8A6eFh4.jpg)<br />
   ```python
-  railfence('WE ARE DISCOVERED. FLEE AT ONCE')='WECRLTEERDSOEEFEAOCAIVDEN'
+  railfence('WE ARE DISCOVERED. FLEE AT ONCE', key=3)='WECRLTEERDSOEEFEAOCAIVDEN'
   ```
 ### 9. Vigenere cipher:
   ![alt text](https://pp.userapi.com/c850636/v850636318/68da1/rL1AIO99qVg.jpg)<br />
