@@ -1,3 +1,3 @@
 # CyberSecurityTool
-[Stegano](READMeStegano.md)
-
+[Stegano](Stegano/Stegano.md)
+[Frequency Text Analysis](FrequencyTextAnalysis/FrequencyTextAnalysis.md)
