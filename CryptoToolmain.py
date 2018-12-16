@@ -223,7 +223,6 @@ def bin_encrypt(s):  # binary cipher encrypt function
 
 # Debugged. Works Ok.
 def bin_decrypt(s):  # binary cipher decrypt function
-
     st = s.split()
     enc = ''
     for n in st:
