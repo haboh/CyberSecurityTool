@@ -1,10 +1,10 @@
-#                        _           __                  _   _                 
-#                       | |         / _|                | | (_)                
-#   ___ _ __ _   _ _ __ | |_ ___   | |_ _   _ _ __   ___| |_ _  ___  _ __  ___ 
+#                        _           __                  _   _
+#                       | |         / _|                | | (_)
+#   ___ _ __ _   _ _ __ | |_ ___   | |_ _   _ _ __   ___| |_ _  ___  _ __  ___
 #  / __| '__| | | | '_ \| __/ _ \  |  _| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
 # | (__| |  | |_| | |_) | || (_) | | | | |_| | | | | (__| |_| | (_) | | | \__ \
 #  \___|_|   \__, | .__/ \__\___/  |_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
-#             __/ | |                                                          
+#             __/ | |
 #            |___/|_|                                                                   by fatnet
 
 import base64  # importing lib to encode/decode base16/32/64
@@ -334,7 +334,7 @@ def sha512(string):  # sha512 string to hash function
     return h.hexdigest()
 
 
-def what_to_do(whattodo, func, string, key=None):
+def what_to_do(whattodo, func, string, key):
     if key != None:
         if func == "Scytale":
             if whattodo == "d":
@@ -436,7 +436,7 @@ class CryptoTool(QMainWindow):
             if self.encodeType not in self.keyrequired:
                 try:
                     self.Output.setText(
-                        what_to_do(self.encodeType, self.Input.getText()))
+                        what_to_do("e", self.encodeType, self.Input.getText(), None))
                 except Exception:
                     self.Output.setText("-Error-")
             else:
@@ -462,7 +462,7 @@ class CryptoTool(QMainWindow):
             if self.decodeType not in self.keyrequired:
                 try:
                     self.Output.setText(
-                        what_to_do(self.decodeType, self.Input.getText()))
+                        what_to_do("d", self.decodeType, self.Input.getText(), None))
                 except Exception:
                     self.Output.setText("-Error-")
             else:
