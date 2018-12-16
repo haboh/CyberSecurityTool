@@ -7,7 +7,7 @@
 
 from PyQt5.QtWidgets import QPushButton, QLabel, QApplication, QMainWindow, QHBoxLayout, QLineEdit, QCheckBox
 from PyQt5 import QtGui, QtWidgets
-from FrequencyAnalysisUi import Ui_MainWindow
+from FrequencyTextAnalysis.FrequencyAnalysisUi import Ui_MainWindow
 import sys
 
 LETTERS_IN_ALPHABET = 26
@@ -19,9 +19,9 @@ def safety_increase_in_dictionary(d, k):
     d[k] = 1 if k not in d else d[k] + 1
 
 
-class FrequencyAnalysis(Ui_MainWindow, QMainWindow):
-    def __init__(self):
-        super().__init__()
+class FrequencyAnalysisMainWindow(Ui_MainWindow, QMainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.setupUi(self)
         self.setWindowTitle('Text frequency analysis')
         self.changeWidgets = {}
@@ -100,7 +100,7 @@ class FrequencyAnalysis(Ui_MainWindow, QMainWindow):
 
 def main():
     application = QApplication(sys.argv)
-    widget = FrequencyAnalysis()
+    widget = FrequencyAnalysisMainWindow()
     widget.show()
     sys.exit(application.exec_())
 

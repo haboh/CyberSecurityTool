@@ -17,7 +17,7 @@ import itertools
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMainWindow
 from PyQt5.QtWidgets import QLabel, QLineEdit, QHBoxLayout, QInputDialog
-from cryptotoolUI import Ui_CryptoTool
+from CryptoTool.cryptotoolUI import Ui_CryptoTool
 
 
 # Debugged. Works Ok.
@@ -269,10 +269,10 @@ def what_to_do(action, func, s, key):
 
 
 # Debugged. Works Ok.
-class CryptoTool(QMainWindow, Ui_CryptoTool):
+class CryptoToolMainWindow(QMainWindow, Ui_CryptoTool, QWidget):
     # Debugged. Works Ok.
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.setupUi(self)
         self.input, self.output = '', ''
         self.decodeType, self.encodeType, self.key = None, None, None
@@ -360,6 +360,6 @@ class CryptoTool(QMainWindow, Ui_CryptoTool):
 # Debugged. Works Ok.
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    prog = CryptoTool()
+    prog = CryptoToolMainWindow()
     prog.show()
     sys.exit(app.exec())
