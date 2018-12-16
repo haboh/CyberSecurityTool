@@ -1,7 +1,7 @@
 # CyberSecurityTool
 
 * This program was created to help participants of CTF competitions or any other competitions in cyber security to solve tasks faster and more comfortable.
-* The main window includes 4 buttons and logo. You should just tap on one of the buttons and new window of this program will appears. You can open as many windows of each program as you want. ![Main Window](https://docs.google.com/uc?id=1HI6VlWyN9-CAD8vO4N8ECEfchxYwKN_G)
+* The main window includes 4 buttons and logo. You should just tap on one of the buttons and new window of this program will appear. You can open as many windows of each program as you want. ![Main Window](https://docs.google.com/uc?id=1HI6VlWyN9-CAD8vO4N8ECEfchxYwKN_G)
 
 * All infrormation about each program:
 
