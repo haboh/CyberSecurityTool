@@ -1,5 +1,5 @@
 # CyberSecurityTool/FrequencyAnalysis
-FrequencyAnalysis PyQt5 program app help you in decrypting messages using frequency analysis.
+FrequencyAnalysis PyQt5 program app helps you in decrypting messages using frequency analysis.
 ![alt text](https://pp.userapi.com/c850636/v850636460/6b6ec/UrP8huCPzNc.jpg)<br />
 ## There are four main parts of the programm we should discuss:
 ### 1. Source lineEdit
