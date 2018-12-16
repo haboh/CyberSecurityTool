@@ -14,5 +14,7 @@
   4.[LSBcipher](LSBcipher/LSBcipher.md)
    
 * Send your feedbacks and suggestions to us:
-  hhaabboohh@gmail.com(Maxim Khabarov aka haboh)
-  generalretcher@gmail.com(Valeriy Matskevich aka fatnet)
+
+  *hhaabboohh@gmail.com(Maxim Khabarov aka haboh)*
+
+  *generalretcher@gmail.com(Valeriy Matskevich aka fatnet)*
