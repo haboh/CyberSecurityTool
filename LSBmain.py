@@ -10,21 +10,54 @@
 
 import sys
 from PIL import Image
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMainWindow
 from PyQt5.QtWidgets import QLabel, QLineEdit, QHBoxLayout, QInputDialog, \
-    QFileDialog
-from PyQt5.QtGui import QPixmap, QIcon
+    QFileDialog, QMessageBox
+from PyQt5.QtGui import QPixmap
+from LSBcipherdecodeUI import LSBDecodeUI
+from LSBcipherencodeUI import LSBEncodeUI
+from LSBcipherUI import LSBMainUI
+from PIL.ImageQt import ImageQt
+import os
 
 
-class LSBmain(QMainWindow):  # LSBmain is a child of CyberSecurityTool class
-    def __init__(self):
-        super().__init__()
-        uic.loadUi('LSBcipher.ui', self)  # Loading UI file to work with
+# Debugged. Works Ok.
+def bin_encrypt(s):  # binary cipher encrypt function
+    st = s.split()
+    ciph = []
+    for word in st:
+        for letter in word:
+            ciph.append(bin(ord(letter))[2:])
+    return ' '.join(ciph)
+
+
+# Debugged. Works Ok.
+def bin_decrypt(s):  # binary cipher decrypt function
+    st = s.split()
+    enc = ''
+    for n in st:
+        enc += chr(int(n, 2))
+    return enc
+
+
+# This function takes PIL image and convert it into the QPixMap
+def convert_image_to_pix_map(im):
+    im = im.convert("RGBA")
+    qim = ImageQt(im)
+    pix = QPixmap.fromImage(qim)
+    return pix
+
+
+# Debugged. Works Ok.
+class LSBmain(QMainWindow, LSBMainUI):  # LSBmain is a child of CyberSecurityTool class
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
         self.decodeButton.clicked.connect(
             self.runDecode)  # on click decodeButton will run runDecode function
         self.encodeButton.clicked.connect(
             self.runEncode)  # on click encodeButton will run runEncode function
+        self.decodeButton.setEnabled(False)
 
     def runDecode(self):  # runDecode function runs LSBDecode app
         lsbdec = LSBDecode(self)  # running LSBDecode
@@ -35,9 +68,10 @@ class LSBmain(QMainWindow):  # LSBmain is a child of CyberSecurityTool class
         lsbenc.show()
 
 
-class LSBDecode(QWidget):
-    def __init__(self, parent):
+class LSBDecode(QMainWindow, LSBDecodeUI, QWidget):
+    def __init__(self, parent=None):
         super().__init__(parent)
+        self.setupUi(self)
         self.decodeType = ""
         self.image = None
         self.height = None
@@ -49,8 +83,7 @@ class LSBDecode(QWidget):
         self.rgbmsg = ""
         self.previewImg = None
         self.MAXSIZE = (200, 200)
-        self.path=None
-        uic.loadUi('LSBcipherdecode.ui', self)
+        self.path = None
         self.decodeButton.clicked.connect(self.decodeBtn)
         self.fileExplorerButton.clicked.connect(self.openFileNameDialog)
         self.previewButton.clicked.connect(self.makePreview)
@@ -65,7 +98,6 @@ class LSBDecode(QWidget):
             False
         )
         if okBtnPressed:
-
             self.decodeType = i
             if self.decodeType == "Through Columns":
                 self.columnDecode()
@@ -88,7 +120,7 @@ class LSBDecode(QWidget):
                                                   options=options)
         if fileName:
             self.pathEdit.setText(fileName)
-            self.path=fileName
+            self.path = fileName
 
     def makePreview(self):
         self.openImg()
@@ -121,7 +153,6 @@ class LSBDecode(QWidget):
         self.lineEdit_rgb.setText(all)
         self.lineEdit_rgbr.setText(all[::-1])
 
-
     def rowDecode(self):
         img = Image.open(self.path)
         w, h = img.size[0], img.size[1]
@@ -147,19 +178,15 @@ class LSBDecode(QWidget):
         self.lineEdit_rgbr.setText(all[::-1])
 
 
-class LSBEncode(QWidget):
-    def __init__(self, parent):
+class LSBEncode(QMainWindow, LSBEncodeUI, QWidget):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.image = None
-        self.msg = ""
-        self.channel = ""
-        self.encodeType = ""
-        self.previewImg = None
+        self.setupUi(self)
+        self.msg, self.channel, self.encodeType = "", "", ""
+        self.previewImg, self.path, self.image = None, None, None
         self.MAXSIZE = (200, 200)
-        self.path=None
-        uic.loadUi('LSBcipherencode.ui', self)
         self.encodeButton.clicked.connect(self.encodeBtnChnl)
-        self.fileExplorerButton.clicked.connect(self.runExplorer)
+        self.fileExplorerButton.clicked.connect(self.openFileNameDialog)
         self.previewButton.clicked.connect(self.makePreview)
         self.saveFileButton.clicked.connect(self.saveFileDialog)
 
@@ -186,7 +213,6 @@ class LSBEncode(QWidget):
             False
         )
         if okBtnPressed:
-
             self.encodeType = j
             if self.encodeType == "Through Columns":
                 self.columnEncode()
@@ -194,40 +220,54 @@ class LSBEncode(QWidget):
                 self.rowEncode()
 
     def openImg(self):
-        self.image = Image.open(self.pathEdit.text())
-        self.width = self.image.size[0]
-        self.height = self.image.size[1]
-        self.pix = self.image.load()
+        file_name = self.pathEdit.text()
+        if os.path.exists(file_name):
+            self.image = Image.open(file_name)
+            self.width = self.image.size[0]
+            self.height = self.image.size[1]
+            self.pix = self.image.load()
 
     def openFileNameDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self,
-                                                  "QFileDialog.getOpenFileName()",
-                                                  "",
-                                                  "BMP files (*.bmp);;PNG files (*.png);;JPG Files (*.jpg)",
-                                                  options=options)
-        if fileName:
-            self.pathEdit.setText(fileName)
-            self.path=fileName
+        file_name, _ = QFileDialog.getOpenFileName(self,
+                                                   "QFileDialog.getOpenFileName()",
+                                                   "",
+                                                   "BMP files (*.bmp);;PNG files (*.png);;JPG Files (*.jpg)",
+                                                   options=options)
+        if file_name:
+            self.pathEdit.setText(file_name)
+            self.path = file_name
 
     def saveFileDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getSaveFileName(self,
-                                                  "QFileDialog.getSaveFileName()",
-                                                  "",
-                                                  "BMP files (*.bmp);;PNG files (*.png);;JPG Files (*.jpg)",
-                                                  options=options)
+        file_name, _ = QFileDialog.getSaveFileName(self,
+                                                   "QFileDialog.getSaveFileName()",
+                                                   "",
+                                                   "BMP files (*.bmp);;PNG files (*.png);;JPG Files (*.jpg)",
+                                                   options=options)
+        self.image.save(file_name)
+
+    def error(self):
+        QMessageBox('Error').show()
 
     def makePreview(self):
-        self.openImg()
-        self.previewImg = self.image.thumbnail(self.maxsize, Image.ANTIALIAS)
-        self.previewImg.save("previewLSBhabohXfatnet.png")
-        pixmap = QPixmap("previewLSBhabohXfatnet.png")
-        self.previewLabel.setPixmap(pixmap)
+        try:
+            self.openImg()
+            self.previewImg = self.image.copy()
+            self.previewImg.thumbnail(self.MAXSIZE, Image.ANTIALIAS)
+            pixmap = convert_image_to_pix_map(self.previewImg)
+            self.previewLabel.setPixmap(pixmap)
+        except Exception:
+            self.error()
+
+    def get_message(self):
+        m = self.msgEdit.text()
+        return bin_encrypt(m)
 
     def columnEncode(self):
+        self.msg = self.get_message()
         img = Image.open(self.path)
         w, h = img.size[0], img.size[1]
         iterator = 0
@@ -236,81 +276,37 @@ class LSBEncode(QWidget):
             if flag == 0:
                 break
             for j in range(h):
-                if self.channel == "Red":
-                    iterator += 1
-                    if self.msg[iterator] == '0':
-                        if self.pix[i, j][0] % 2 == 0:
-                            continue
-                        self.pix[i, j][0] = self.pix[i, j][0] - 1
-                    else:
-                        if self.pix[i,j][0] % 2 == 1:
-                            continue
-                        self.pix[i,j][0] = self.pix[i,j][0] + 1
-                if self.channel == "Green":
-                    iterator += 1
-                    if self.msg[iterator] == '0':
-                        if self.pix[i, j][1] % 2 == 0:
-                            continue
-                        self.pix[i, j][1] = self.pix[i, j][1] - 1
-                    else:
-                        if self.pix[i, j][1] % 2 == 1:
-                            continue
-                        self.pix[i, j][1] = self.pix[i, j][1] + 1
-                if self.channel == "Blue":
-                    if self.msg[iterator] == '0':
-                        if self.pix[i, j][2] % 2 == 0:
-                            continue
-                        self.pix[i, j][2] = self.pix[i, j][2] - 1
-                    else:
-                        if self.pix[j, i][2] % 2 == 1:
-                            continue
-                        self.pix[i, j][2] = self.pix[i, j][2] + 1
                 if iterator >= len(self.msg):
                     flag = 0
                     break
+                if self.channel == "Red":
+                    self.pix[i, j][0] = int(self.msg[iterator])
+                if self.channel == "Green":
+                    self.pix[i, j][1] = int(self.msg[iterator])
+                if self.channel == "Blue":
+                    self.pix[i, j][2] = int(self.msg[iterator])
+                iterator += 1
 
     def rowEncode(self):
+        self.msg = self.get_message()
         img = Image.open(self.path)
         w, h = img.size[0], img.size[1]
-        pix = img.load()
         iterator = 0
-        flag=1
-        for i in range(h):
-            if flag==0:
+        flag = 1
+        for j in range(h):
+            if flag == 0:
                 break
-            for j in range(w):
-                if self.channel=="Red":
-                    iterator+=1
-                    if self.msg[iterator]=='0':
-                        if pix[j, i][0]%2==0:
-                            continue
-                        pix[j, i][0]=pix[j,i][0]-1
-                    else:
-                        if pix[j, i][0]%2==1:
-                            continue
-                        pix[j,i][0]=pix[j,i][0]+1
-                if self.channel=="Green":
-                    iterator+=1
-                    if self.msg[iterator]=='0':
-                        if pix[j, i][1]%2==0:
-                            continue
-                        pix[j, i][1]=pix[j,i][1]-1
-                    else:
-                        if pix[j, i][1]%2==1:
-                            continue
-                        pix[j,i][1]=pix[j,i][1]+1
-                if self.channel=="Blue":
-                    if self.msg[iterator]=='0':
-                        if pix[j, i][2]%2==0:
-                            continue
-                        pix[j, i][2]=pix[j,i][2]-1
-                    else:
-                        if pix[j, i][2]%2==1:
-                            continue
-                        pix[j,i][2]=pix[j,i][2]+1
-                if iterator>=len(self.msg):
-                    flag=0
+            for i in range(w):
+                if iterator >= len(self.msg):
+                    flag = 0
                     break
+                if self.channel == "Red":
+                    self.pix[i, j][0] = int(self.msg[iterator])
+                if self.channel == "Green":
+                    self.pix[i, j][1] = int(self.msg[iterator])
+                if self.channel == "Blue":
+                    self.pix[i, j][2] = int(self.msg[iterator])
+                iterator += 1
 
 
 if __name__ == "__main__":
